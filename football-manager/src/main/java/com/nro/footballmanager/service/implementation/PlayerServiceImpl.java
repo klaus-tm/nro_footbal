@@ -52,4 +52,9 @@ public class PlayerServiceImpl implements PlayerService {
     public void deletePlayerByID(Long playerID) {
         playerRepository.deleteById(playerID);
     }
+
+    @Override
+    public void deletePlayers() {
+        playerRepository.deleteAll();
+    }
 }

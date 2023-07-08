@@ -1,19 +1,15 @@
 package com.nro.footballmanager.controller;
 
 import com.nro.footballmanager.entity.Player;
-import com.nro.footballmanager.repository.PlayerRepository;
 import com.nro.footballmanager.service.PlayerService;
 import jakarta.persistence.EntityNotFoundException;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/players")
 public class PlayerController {
     @Autowired
     private PlayerService playerService;
@@ -34,15 +30,22 @@ public class PlayerController {
     }
 
     @DeleteMapping("/players/{id}")
-    public String deleteplayerById(@PathVariable("id")Long playerId){
+    public String deletePlayerById(@PathVariable("id")Long playerId){
         try{
             if(!playerService.playerExistance(playerId))
                 throw new EntityNotFoundException();
+            playerService.deletePlayerByID(playerId);
             return "Deleted successfully!";
         } catch (EntityNotFoundException e) {
             return "Deletion failed!";
         }
-//        playerService.deletePlayerByID(playerId);
-//        return "Deleted successfully!";
+    }
+
+    @DeleteMapping("/players")
+    public String deletePlayers(){
+        if(playerService.fetchPlayersList().isEmpty())
+            return "There are no players stored!";
+        playerService.deletePlayers();
+        return "All players deleted!";
     }
 }

@@ -14,4 +14,6 @@ public interface PlayerService {
     Boolean playerExistance(Long playerID);
 
     void deletePlayerByID(Long playerID);
+
+    void deletePlayers();
 }
