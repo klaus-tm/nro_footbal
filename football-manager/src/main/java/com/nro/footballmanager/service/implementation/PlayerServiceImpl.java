@@ -1,60 +1,51 @@
 package com.nro.footballmanager.service.implementation;
 
 import com.nro.footballmanager.entity.Player;
+import com.nro.footballmanager.entity.dto.PlayerDTO;
 import com.nro.footballmanager.repository.PlayerRepository;
 import com.nro.footballmanager.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PlayerServiceImpl implements PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Override
+    public List<Player> findAllPlayers() {
+        return playerRepository.findAll();
+    }
+
+    @Override
+    public Optional<Player> getById(Long playerId) {
+        return playerRepository.findById(playerId);
+    }
+
     @Override
     public Player savePlayer(Player player) {
         return playerRepository.save(player);
     }
 
     @Override
-    public List<Player> fetchPlayersList() {
-        return (List<Player>) playerRepository.findAll();
+    public Player updatePlayer(PlayerDTO playerDTO, Long id) {
+        Player updatedPlayer = PlayerDTO.toEntity(playerDTO);
+        updatedPlayer.setId(id);
+
+        return savePlayer(updatedPlayer);
     }
 
     @Override
-    public Player updatePlayer(Player player, Long playerID) {
-        Player old = playerRepository.findById(playerID).get();
-
-        if (Objects.nonNull(player.getName()) && !"".equalsIgnoreCase(player.getName()))
-            old.setName(player.getName());
-
-        if (Objects.nonNull(player.getGoalsScored()))
-            old.setGoalsScored(player.getGoalsScored());
-
-        if (Objects.nonNull(player.getTeam()))
-            old.setTeam(player.getTeam());
-
-        if (Objects.nonNull(player.getRole()))
-            old.setRole(player.getRole());
-
-        return playerRepository.save(old);
-    }
-
-    @Override
-    public Boolean playerExistance(Long playerID) {
+    public Boolean playerExists(Long playerID) {
         return playerRepository.existsById(playerID);
     }
 
     @Override
     public void deletePlayerByID(Long playerID) {
         playerRepository.deleteById(playerID);
-    }
-
-    @Override
-    public void deletePlayers() {
-        playerRepository.deleteAll();
     }
 }

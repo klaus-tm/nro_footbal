@@ -1,6 +1,5 @@
 package com.nro.footballmanager.service;
 
-import com.nro.footballmanager.entity.Player;
 import com.nro.footballmanager.entity.Result;
 
 import java.util.List;

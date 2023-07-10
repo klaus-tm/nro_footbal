@@ -1,19 +1,21 @@
 package com.nro.footballmanager.service;
 
 import com.nro.footballmanager.entity.Player;
+import com.nro.footballmanager.entity.dto.PlayerDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlayerService {
+    List<Player> findAllPlayers();
+
+    Optional<Player> getById(Long playerId);
+
     Player savePlayer(Player player);
 
-    List<Player> fetchPlayersList();
+    Player updatePlayer(PlayerDTO playerDTO, Long id);
 
-    Player updatePlayer(Player player, Long playerID);
-
-    Boolean playerExistance(Long playerID);
+    Boolean playerExists(Long playerID);
 
     void deletePlayerByID(Long playerID);
-
-    void deletePlayers();
 }

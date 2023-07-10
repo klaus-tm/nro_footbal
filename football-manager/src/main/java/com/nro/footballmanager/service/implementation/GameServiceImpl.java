@@ -33,17 +33,17 @@ public class GameServiceImpl implements GameService {
         if(Objects.nonNull(game.getStartHour()))
             old.setStartHour(game.getStartHour());
 
-        if(Objects.nonNull(game.getResult()))
-            old.setResult(game.getResult());
-
-        if(Objects.nonNull(game.getStadium()))
-            old.setStadium(game.getStadium());
-
-        if(Objects.nonNull(game.getTeamOne()))
-            old.setTeamOne(game.getTeamOne());
-
-        if(Objects.nonNull(game.getTeamTwo()))
-            old.setTeamTwo(game.getTeamTwo());
+//        if(Objects.nonNull(game.getResult()))
+//            old.setResult(game.getResult());
+//
+//        if(Objects.nonNull(game.getStadium()))
+//            old.setStadium(game.getStadium());
+//
+//        if(Objects.nonNull(game.getTeamOne()))
+//            old.setTeamOne(game.getTeamOne());
+//
+//        if(Objects.nonNull(game.getTeamTwo()))
+//            old.setTeamTwo(game.getTeamTwo());
 
         return gameRepository.save(old);
     }
