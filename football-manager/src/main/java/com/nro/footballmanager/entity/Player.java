@@ -3,10 +3,11 @@ package com.nro.footballmanager.entity;
 import com.nro.footballmanager.entity.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.http.HttpStatusCode;
 
 @Entity
 @Data
-public class Player {
+public class Player{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)

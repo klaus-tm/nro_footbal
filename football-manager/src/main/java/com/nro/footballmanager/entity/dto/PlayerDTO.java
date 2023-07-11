@@ -31,4 +31,14 @@ public class PlayerDTO {
 
         return player;
     }
+
+    public static Player toEntityUpdate(PlayerDTO playerDTO, Player player) {
+
+        player.setName(playerDTO.getName());
+        player.setRole(playerDTO.getRole());
+        player.setGoalsScored(playerDTO.getGoalsScored());
+        player.getTeam().setId(playerDTO.getTeamID());
+
+        return player;
+    }
 }

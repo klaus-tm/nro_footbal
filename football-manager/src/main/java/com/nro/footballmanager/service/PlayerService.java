@@ -13,7 +13,7 @@ public interface PlayerService {
 
     Player savePlayer(Player player);
 
-    Player updatePlayer(PlayerDTO playerDTO, Long id);
+    Player updatePlayer(Player player, PlayerDTO playerDTO);
 
     Boolean playerExists(Long playerID);
 

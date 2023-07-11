@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/players")
 public class PlayerController {
     @Autowired
     private PlayerService playerService;
@@ -32,7 +33,7 @@ public class PlayerController {
     public ResponseEntity<PlayerDTO> updatePlayer(@RequestBody PlayerDTO playerDTO, @PathVariable("id") Long id) {
         Optional<Player> oldPlayer = playerService.getById(id);
         if (oldPlayer.isPresent()) {
-            return new ResponseEntity<>(PlayerDTO.fromEntity(playerService.updatePlayer(playerDTO, id)), HttpStatus.OK);
+            return new ResponseEntity<>(PlayerDTO.fromEntity(playerService.updatePlayer(oldPlayer.get(), playerDTO)), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

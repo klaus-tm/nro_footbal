@@ -32,11 +32,9 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player updatePlayer(PlayerDTO playerDTO, Long id) {
-        Player updatedPlayer = PlayerDTO.toEntity(playerDTO);
-        updatedPlayer.setId(id);
-
-        return savePlayer(updatedPlayer);
+    public Player updatePlayer(Player player, PlayerDTO playerDTO) {
+        player = PlayerDTO.toEntityUpdate(playerDTO, player);
+        return savePlayer(player);
     }
 
     @Override
