@@ -2,7 +2,9 @@ package com.nro.footballmanager.entity.dto;
 
 import com.nro.footballmanager.entity.Player;
 import com.nro.footballmanager.entity.enums.RoleEnum;
+import com.nro.footballmanager.service.implementation.TeamServiceImpl;
 import lombok.Data;
+
 
 @Data
 public class PlayerDTO {
@@ -10,10 +12,8 @@ public class PlayerDTO {
     private Integer goalsScored;
     private RoleEnum role;
     private Long teamID;
-
     public static PlayerDTO fromEntity(Player player) {
         PlayerDTO playerDTO = new PlayerDTO();
-
         playerDTO.setName(player.getName());
         playerDTO.setGoalsScored(player.getGoalsScored());
         playerDTO.setRole(player.getRole());
@@ -27,7 +27,8 @@ public class PlayerDTO {
         player.setName(playerDTO.getName());
         player.setRole(playerDTO.getRole());
         player.setGoalsScored(playerDTO.getGoalsScored());
-        player.getTeam().setId(playerDTO.getTeamID());
+        if(new TeamServiceImpl().teamExists(playerDTO.getTeamID()))
+            player.setTeam(new TeamServiceImpl().getTeamByID(playerDTO.getTeamID()).get());
 
         return player;
     }

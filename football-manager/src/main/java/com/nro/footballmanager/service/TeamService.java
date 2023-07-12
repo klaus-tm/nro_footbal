@@ -1,17 +1,18 @@
 package com.nro.footballmanager.service;
 import com.nro.footballmanager.entity.Team;
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamService {
-    Team saveTeam(Team team);
+    List<Team> findAllTeams();
+    Optional<Team> getTeamByID(Long teamID);
 
-    List<Team> fetchTeamsList();
+    Team saveTeam(Team team);
 
     Team updateTeam(Team team, Long teamID);
 
-    Boolean teamExistance(Long teamID);
+    Boolean teamExists(Long teamID);
 
     void deleteTeamByID(Long teamID);
 
-    void deleteTeams();
 }

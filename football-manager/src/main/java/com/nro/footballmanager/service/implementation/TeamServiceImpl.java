@@ -8,19 +8,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TeamServiceImpl implements TeamService {
     @Autowired
     private TeamRepository teamRepository;
+
     @Override
-    public Team saveTeam(Team team) {
-        return teamRepository.save(team);
+    public List<Team> findAllTeams() {
+        return (List<Team>) teamRepository.findAll();
     }
 
     @Override
-    public List<Team> fetchTeamsList() {
-        return (List<Team>) teamRepository.findAll();
+    public Optional<Team> getTeamByID(Long teamID) {
+        return teamRepository.findById(teamID);
+    }
+
+    @Override
+    public Team saveTeam(Team team) {
+        return teamRepository.save(team);
     }
 
     @Override
@@ -49,7 +56,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Boolean teamExistance(Long teamID) {
+    public Boolean teamExists(Long teamID) {
         return teamRepository.existsById(teamID);
     }
 
@@ -58,8 +65,4 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.deleteById(teamID);
     }
 
-    @Override
-    public void deleteTeams() {
-        teamRepository.deleteAll();
-    }
 }

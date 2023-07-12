@@ -21,7 +21,7 @@ public class TeamController {
 
     @GetMapping("/teams")
     public List<Team> fetchTeamsList(){
-        return teamService.fetchTeamsList();
+        return teamService.findAllTeams();
     }
 
     @PutMapping("/teams/{id}")
@@ -32,7 +32,7 @@ public class TeamController {
     @DeleteMapping("/teams/{id}")
     public String deleteTeamById(@PathVariable("id")Long teamId){
         try{
-            if(!teamService.teamExistance(teamId))
+            if(!teamService.teamExists(teamId))
                 throw new EntityNotFoundException();
             teamService.deleteTeamByID(teamId);
             return "Deleted successfully!";
@@ -40,12 +40,12 @@ public class TeamController {
             return "Deletion failed!";
         }
     }
-
-    @DeleteMapping("/teams")
-    public String deleteTeams(){
-        if (teamService.fetchTeamsList().isEmpty())
-            return "There are no teams stored!";
-        teamService.deleteTeams();
-        return "All teams deleted!";
-    }
+//
+//    @DeleteMapping("/teams")
+//    public String deleteTeams(){
+//        if (teamService.findAllTeams().isEmpty())
+//            return "There are no teams stored!";
+//        teamService.deleteTeams();
+//        return "All teams deleted!";
+//    }
 }

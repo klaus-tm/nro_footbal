@@ -22,8 +22,8 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Optional<Player> getById(Long playerId) {
-        return playerRepository.findById(playerId);
+    public Optional<Player> getPlayerByID(Long playerID) {
+        return playerRepository.findById(playerID);
     }
 
     @Override

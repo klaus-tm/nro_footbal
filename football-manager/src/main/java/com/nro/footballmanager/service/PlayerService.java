@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface PlayerService {
     List<Player> findAllPlayers();
 
-    Optional<Player> getById(Long playerId);
+    Optional<Player> getPlayerByID(Long playerID);
 
     Player savePlayer(Player player);
 
