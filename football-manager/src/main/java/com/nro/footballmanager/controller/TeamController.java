@@ -4,10 +4,13 @@ import com.nro.footballmanager.entity.Team;
 import com.nro.footballmanager.service.TeamService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TeamController {
@@ -15,37 +18,32 @@ public class TeamController {
     private TeamService teamService;
 
     @PostMapping("/teams")
-    public Team saveTeam(@Validated @RequestBody Team team){
-        return teamService.saveTeam(team);
+    public ResponseEntity<Team> saveTeam(@Validated @RequestBody Team team){
+        return new ResponseEntity<>(teamService.saveTeam(team), HttpStatus.CREATED);
     }
 
     @GetMapping("/teams")
-    public List<Team> fetchTeamsList(){
-        return teamService.findAllTeams();
+    public ResponseEntity<List<Team>> findAllTeams(){
+        List<Team> teams = teamService.findAllTeams();
+        return new ResponseEntity<>(teams, HttpStatus.OK);
     }
 
     @PutMapping("/teams/{id}")
-    public Team updateTeam(@RequestBody Team team, @PathVariable("id")Long teamId){
-        return teamService.updateTeam(team, teamId);
+    public ResponseEntity<Team> updateTeam(@RequestBody Team newTeam, @PathVariable("id")Long id){
+        Optional<Team> oldTeam = teamService.getTeamByID(id);
+        if (oldTeam.isPresent()){
+            return new ResponseEntity<>(teamService.updateTeam(oldTeam.get(), newTeam), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/teams/{id}")
-    public String deleteTeamById(@PathVariable("id")Long teamId){
-        try{
-            if(!teamService.teamExists(teamId))
-                throw new EntityNotFoundException();
-            teamService.deleteTeamByID(teamId);
-            return "Deleted successfully!";
-        } catch (EntityNotFoundException e) {
-            return "Deletion failed!";
+    public ResponseEntity<HttpStatus> deleteTeamById(@PathVariable("id")Long teamId){
+        if (!teamService.teamExists(teamId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        teamService.deleteTeamByID(teamId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-//
-//    @DeleteMapping("/teams")
-//    public String deleteTeams(){
-//        if (teamService.findAllTeams().isEmpty())
-//            return "There are no teams stored!";
-//        teamService.deleteTeams();
-//        return "All teams deleted!";
-//    }
 }

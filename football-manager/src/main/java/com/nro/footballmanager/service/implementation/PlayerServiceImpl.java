@@ -1,13 +1,13 @@
 package com.nro.footballmanager.service.implementation;
 
 import com.nro.footballmanager.entity.Player;
-import com.nro.footballmanager.entity.dto.PlayerDTO;
 import com.nro.footballmanager.repository.PlayerRepository;
 import com.nro.footballmanager.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -32,9 +32,20 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
-    public Player updatePlayer(Player player, PlayerDTO playerDTO) {
-        player = PlayerDTO.toEntityUpdate(playerDTO, player);
-        return savePlayer(player);
+    public Player updatePlayer(Player oldPlayer, Player newPlayer) {
+        if (Objects.nonNull(newPlayer.getName()) && !"".equals(newPlayer.getName()))
+            oldPlayer.setName(newPlayer.getName());
+
+        if (Objects.nonNull(newPlayer.getGoalsScored()))
+            oldPlayer.setGoalsScored(newPlayer.getGoalsScored());
+
+        if (Objects.nonNull(newPlayer.getRole()))
+            oldPlayer.setRole(newPlayer.getRole());
+
+        if (Objects.nonNull(newPlayer.getTeam()))
+            oldPlayer.setTeam(newPlayer.getTeam());
+
+        return savePlayer(oldPlayer);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<Team> findAllTeams() {
-        return (List<Team>) teamRepository.findAll();
+        return teamRepository.findAll();
     }
 
     @Override
@@ -31,28 +31,26 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Team updateTeam(Team team, Long teamID) {
-        Team old = teamRepository.findById(teamID).get();
+    public Team updateTeam(Team oldTeam, Team newTeam) {
+        if (Objects.nonNull(newTeam.getName()) && !"".equals(newTeam.getName()))
+            oldTeam.setName(newTeam.getName());
 
-        if (Objects.nonNull(team.getName()) && !"".equals(team.getName()))
-            old.setName(team.getName());
+        if (Objects.nonNull(newTeam.getGoalsScored()))
+            oldTeam.setGoalsScored(newTeam.getGoalsScored());
 
-        if (Objects.nonNull(team.getGoalsScored()))
-            old.setGoalsScored(team.getGoalsScored());
+        if (Objects.nonNull(newTeam.getGoalsReceived()))
+            oldTeam.setGoalsReceived(newTeam.getGoalsReceived());
 
-        if (Objects.nonNull(team.getGoalsReceived()))
-            old.setGoalsReceived(team.getGoalsReceived());
+        if (Objects.nonNull(newTeam.getVictories()))
+            oldTeam.setVictories(newTeam.getVictories());
 
-        if (Objects.nonNull(team.getVictories()))
-            old.setVictories(team.getVictories());
+        if (Objects.nonNull(newTeam.getDefeats()))
+            oldTeam.setDefeats(newTeam.getDefeats());
 
-        if (Objects.nonNull(team.getDefeats()))
-            old.setDefeats(team.getDefeats());
+        if (Objects.nonNull(newTeam.getDraws()))
+            oldTeam.setDraws(newTeam.getDraws());
 
-        if (Objects.nonNull(team.getDraws()))
-            old.setDraws(team.getDraws());
-
-        return teamRepository.save(old);
+        return saveTeam(oldTeam);
     }
 
     @Override

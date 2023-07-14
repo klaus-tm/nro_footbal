@@ -1,7 +1,6 @@
 package com.nro.footballmanager.controller;
 
 import com.nro.footballmanager.entity.Player;
-import com.nro.footballmanager.entity.dto.PlayerDTO;
 import com.nro.footballmanager.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +17,8 @@ public class PlayerController {
     private PlayerService playerService;
 
     @PostMapping("/players")
-    public ResponseEntity<Player> savePlayer(@Validated @RequestBody PlayerDTO playerDTO) {
-        return new ResponseEntity<>(playerService.savePlayer(PlayerDTO.toEntity(playerDTO)), HttpStatus.CREATED);
+    public ResponseEntity<Player> savePlayer(@Validated @RequestBody Player player) {
+        return new ResponseEntity<>(playerService.savePlayer(player), HttpStatus.CREATED);
     }
 
     @GetMapping("/players")
@@ -29,10 +28,10 @@ public class PlayerController {
     }
 
     @PutMapping("/players/{id}")
-    public ResponseEntity<PlayerDTO> updatePlayer(@RequestBody PlayerDTO playerDTO, @PathVariable("id") Long id) {
+    public ResponseEntity<Player> updatePlayer(@Validated @RequestBody Player newPlayer, @PathVariable("id") Long id) {
         Optional<Player> oldPlayer = playerService.getPlayerByID(id);
         if (oldPlayer.isPresent()) {
-            return new ResponseEntity<>(PlayerDTO.fromEntity(playerService.updatePlayer(oldPlayer.get(), playerDTO)), HttpStatus.OK);
+            return new ResponseEntity<>(playerService.updatePlayer(oldPlayer.get(), newPlayer), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -45,5 +44,4 @@ public class PlayerController {
         playerService.deletePlayerByID(playerId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

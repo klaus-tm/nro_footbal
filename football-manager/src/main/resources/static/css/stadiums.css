@@ -1,0 +1,19 @@
+.scrollable-bg-stadiums {
+    position: relative;
+    overflow: auto;
+    height: 100vh;
+}
+.scrollable-bg-stadiums::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/stadiums.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(80%); /* Adjust the brightness value as needed */
+    z-index: -1;
+}

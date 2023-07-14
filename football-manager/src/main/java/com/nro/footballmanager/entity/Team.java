@@ -1,12 +1,16 @@
 package com.nro.footballmanager.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +35,4 @@ public class Team {
     @Column(nullable = false)
     private Integer draws;
 
-    @OneToMany(mappedBy = "team")
-    private List<Player> players;
-
-    @OneToMany(mappedBy = "teamOne")
-    private List<Game> gamesOne;
-
-    @OneToMany(mappedBy = "teamTwo")
-    private List<Game> gamesTwo;
 }

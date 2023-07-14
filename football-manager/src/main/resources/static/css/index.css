@@ -1,0 +1,59 @@
+.centered-text {
+    text-align: center;
+    color: ghostwhite;
+    filter: brightness(100%);
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fade-in 2s ease-in forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scrollable-bg {
+    position: relative;
+    overflow: auto;
+    height: 100vh;
+}
+
+.scrollable-bg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/football_index.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    filter: brightness(80%); /* Adjust the brightness value as needed */
+    z-index: -1;
+}
+
+.nav-link:hover .fa-icon {
+    animation: bounce 0.5s infinite;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+

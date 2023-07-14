@@ -9,7 +9,7 @@ public interface TeamService {
 
     Team saveTeam(Team team);
 
-    Team updateTeam(Team team, Long teamID);
+    Team updateTeam(Team team, Team teamID);
 
     Boolean teamExists(Long teamID);
 
