@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Results</title>
@@ -50,8 +50,64 @@
 <div class="scrollable-bg-results">
     <div class="container mt-4">
         <h1 class="centered-text fade-in">Results</h1>
+
+        <div class="d-flex justify-content-center" style="padding: 10px">
+            <button class="btn btn-primary mr-2 fade-in" data-bs-toggle="modal" data-bs-target="#resultModalAdd">Play games</button>
+        </div>
+
+        <div class="modal fade" id="resultModalAdd" tabindex="-1" aria-labelledby="resultModalLabelAdd" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="resultModalLabelAdd">Play a game</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="gameAdd" class="form-label">Choose game to play</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="gameAdd">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary saveResult">Play the game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-stripped fade-in result">
+            <thead>
+            <tr>
+                <th>Team One</th>
+                <th>Team Two</th>
+                <th>Final Score</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="result : ${results}">
+                <td th:text="${result.teamOne}"></td>
+                <td th:text="${result.teamTwo}"></td>
+                <td th:text="${result.finalScore}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+
+<script src="js/general.js"></script>
+<script src="js/results.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>

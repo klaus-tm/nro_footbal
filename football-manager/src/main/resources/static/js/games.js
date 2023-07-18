@@ -42,8 +42,8 @@ async function updateGame(game, flatpickrInstanceEdit) {
     game.teamTwo = await getTeamById($('#teamTwoAdd').val());
 
     const response = await fetch(
-        baseURL + `/games`, {
-            method: 'POST',
+        baseURL + `/games` + game.id, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },

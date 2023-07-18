@@ -32,7 +32,7 @@ public class Game {
     @Column
     private LocalDate date;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "resultID")
     private Result result;
 }

@@ -52,11 +52,59 @@
 <div class="scrollable-bg-index">
   <div class="container mt-4">
     <h1 class="centered-text fade-in">Welcome to Football Manager!</h1>
+
+    <h1 class="centered-text fade-in">Championship so far. Who has the most wins?</h1>
+
+    <table id="top5TeamsTableVictories" class="table table-stripped fade-in">
+      <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Team Name</th>
+        <th>Victories</th>
+        <th>Goals Rate</th>
+      </tr>
+      </thead>
+      <tbody id="top5TeamsTableBodyVictories">
+      <!-- Table rows will be dynamically populated by the JavaScript code -->
+      </tbody>
+    </table>
+
+    <h1 class="centered-text fade-in">What about who has the best goals rate?</h1>
+
+    <table id="top5TeamsTableGoalRates" class="table table-stripped fade-in">
+      <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Team Name</th>
+        <th>Goal Rate</th>
+        <th>Victories</th>
+      </tr>
+      </thead>
+      <tbody id="top5TeamsTableBodyGoalRates">
+      <!-- Table rows will be dynamically populated by the JavaScript code -->
+      </tbody>
+    </table>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <a href="teams.html" class="btn btn-primary fade-in">Go to teams</a>
+        </div>
+        <div class="col-auto">
+          <a href="games.html" class="btn btn-primary fade-in">Go to games</a>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script src="js/general.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+         crossorigin="anonymous">
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 </body>
