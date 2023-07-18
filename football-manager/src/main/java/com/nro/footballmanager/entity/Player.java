@@ -30,8 +30,5 @@ public class Player{
     @JoinColumn(name = "teamID")
     private Team team;
 
-    @PreRemove
-    private void setNull(){
-        this.setTeam(null);
-    }
+
 }

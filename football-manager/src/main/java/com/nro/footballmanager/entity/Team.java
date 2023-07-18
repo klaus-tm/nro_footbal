@@ -1,5 +1,6 @@
 package com.nro.footballmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,4 +36,25 @@ public class Team {
     @Column(nullable = false)
     private Integer draws;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "team")
+    private List<Player>players;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "teamOne")
+    private List<Game> gamesOne;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "teamTwo")
+    private List<Game> gamesTwo;
+
+    @PreRemove
+    private void setNull(){
+        for (Player player: this.players)
+            player.setTeam(null);
+        for (Game gameOne: this.gamesOne)
+            gameOne.setTeamOne(null);
+        for (Game gameTwo : this.gamesTwo)
+            gameTwo.setTeamTwo(null);
+    }
 }

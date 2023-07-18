@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Games</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/games.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://kit.fontawesome.com/d97e248aca.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="icon" href="images/football.png">
 </head>
 <body>
@@ -24,7 +26,7 @@
                     <a class="nav-link" href="players.html"><i class="fa-solid fa-icon fa-person"></i> Players</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="teams.html"><i class="fa-solid fa-icon fa-people-group"></i> Teams</a>
+                    <a class="nav-link" href="games.html"><i class="fa-solid fa-icon fa-people-group"></i> games</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="games.html"><i class="fa-solid fa-icon fa-gamepad"></i> Games</a>
@@ -49,8 +51,156 @@
 <div class="scrollable-bg-games">
     <div class="container mt-4">
         <h1 class="centered-text fade-in">Games</h1>
+
+        <div class="d-flex justify-content-center" style="padding: 10px">
+            <button class="btn btn-primary mr-2 fade-in" data-bs-toggle="modal" data-bs-target="#gameModalAdd">Add game</button>
+        </div>
+
+        <!-- add game modal -->
+        <div class="modal fade" id="gameModalAdd" tabindex="-1" aria-labelledby="gameModalLabelAdd" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameModalLabelAdd">Add game</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="gameDateAdd" class="form-label">Date</label>
+                                <input type="text" class="form-control" id="gameDateAdd" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="startHourAdd" class="form-label">Start Hour</label>
+                                <div class="input-group">
+                                    <input type="time" class="form-control" id="startHourAdd">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stadiumAdd" class="form-label">Stadium</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="stadiumAdd">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamOneAdd" class="form-label">Team One</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamOneAdd">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamTwoAdd" class="form-label">Team Two</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamTwoAdd">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary saveGame">Save game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--edit game modal-->
+        <div class="modal fade" id="gameModalEdit" tabindex="-1" aria-labelledby="gameModalLabelEdit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="gameModalLabelEdit">Edit game</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="gameDateEdit" class="form-label">Date</label>
+                                <input type="text" class="form-control" id="gameDateEdit" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="startHourEdit" class="form-label">Start Hour</label>
+                                <div class="input-group">
+                                    <input type="time" class="form-control" id="startHourEdit">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stadiumEdit" class="form-label">Stadium</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="stadiumEdit">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamOneEdit" class="form-label">Team One</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamOneEdit">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamTwoEdit" class="form-label">Team Two</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamTwoEdit">
+                                        <!-- Options will be dynamically populated by JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary editGame">Save game</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-stripped fade-in game">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Date</th>
+                <th>Start Hour</th>
+                <th>Stadium</th>
+                <th>Team one</th>
+                <th>Team two</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="game : ${games}">
+                <td></td>
+                <td></td>
+                <td th:text="${game.date}"></td>
+                <td th:text="${game.startHour}"></td>
+                <td th:text="${game.stadium}"></td>
+                <td th:text="${game.teamOne}"></td>
+                <td th:text="${game.teamTwo}"></td>
+                <td th:text="${game.result}"></td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>
 
+<script src="js/general.js"></script>
+<script src="js/games.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </body>
 </html>

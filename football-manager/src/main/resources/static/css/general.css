@@ -1,0 +1,38 @@
+.centered-text {
+    text-align: center;
+    color: ghostwhite;
+    filter: brightness(100%);
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fade-in 2s ease-in forwards;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nav-link:hover .fa-icon {
+    animation: bounce 0.5s infinite;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+

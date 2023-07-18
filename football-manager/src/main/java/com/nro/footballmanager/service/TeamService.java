@@ -5,11 +5,12 @@ import java.util.Optional;
 
 public interface TeamService {
     List<Team> findAllTeams();
+
     Optional<Team> getTeamByID(Long teamID);
 
     Team saveTeam(Team team);
 
-    Team updateTeam(Team team, Team teamID);
+    Team updateTeam(Team oldTeam, Team newTeam);
 
     Boolean teamExists(Long teamID);
 

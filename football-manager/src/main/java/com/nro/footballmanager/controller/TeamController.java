@@ -2,7 +2,6 @@ package com.nro.footballmanager.controller;
 
 import com.nro.footballmanager.entity.Team;
 import com.nro.footballmanager.service.TeamService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 public class TeamController {
     @Autowired
     private TeamService teamService;
@@ -26,6 +26,13 @@ public class TeamController {
     public ResponseEntity<List<Team>> findAllTeams(){
         List<Team> teams = teamService.findAllTeams();
         return new ResponseEntity<>(teams, HttpStatus.OK);
+    }
+
+    @GetMapping("/teams/{id}")
+    public ResponseEntity<Team> findTeamById(@PathVariable("id") Long teamID){
+        if (teamService.getTeamByID(teamID).isPresent())
+            return new ResponseEntity<>(teamService.getTeamByID(teamID).get(), HttpStatus.OK);
+        else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/teams/{id}")

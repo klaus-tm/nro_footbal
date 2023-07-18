@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Players</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/players.css">
     <script src="https://kit.fontawesome.com/d97e248aca.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="icon" href="images/football.png">
 </head>
 <body>
@@ -49,8 +50,138 @@
 <div class="scrollable-bg-players">
     <div class="container mt-4">
         <h1 class="centered-text fade-in">Players</h1>
+
+        <div class="d-flex justify-content-center" style="padding: 10px">
+            <button class="btn btn-primary mr-2 fade-in" data-bs-toggle="modal" data-bs-target="#playerModalAdd">Add Player</button>
+        </div>
+
+        <div class="modal fade" id="playerModalAdd" tabindex="-1" aria-labelledby="playerModalLabelAdd" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="playerModalLabelAdd">Add PLayer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="playerNameAdd" class="form-label">Player Name</label>
+                                <input type="text" class="form-control" id="playerNameAdd" placeholder="Enter player name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsScoredAdd" class="form-label">Goals Scored</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsScoredAdd" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="roleAdd" class="form-label">Role</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="roleAdd">
+                                        <option value="DEFENDER">Defender</option>
+                                        <option value="FORWARD">Forward</option>
+                                        <option value="GOALKEAPER">Goalkeaper</option>
+                                        <option value="MIDFIELDER">Midfielder</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamAdd" class="form-label">Team</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamAdd">
+                                        <!-- The options will be dynamically populated by the JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary savePlayer">Save Player</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="playerModalEdit" tabindex="-1" aria-labelledby="playerModalLabelEdit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="playerModalLabelEdit">Edit PLayer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="playerNameEdit" class="form-label">Player Name</label>
+                                <input type="text" class="form-control" id="playerNameEdit" placeholder="Enter player name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsScoredEdit" class="form-label">Goals Scored</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsScoredEdit" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="roleEdit" class="form-label">Role</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="roleEdit">
+                                        <option value="DEFENDER">Defender</option>
+                                        <option value="FORWARD">Forward</option>
+                                        <option value="GOALKEAPER">Goalkeaper</option>
+                                        <option value="MIDFIELDER">Midfielder</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="teamEdit" class="form-label">Team</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="teamEdit">
+                                        <!-- The options will be dynamically populated by the JavaScript code -->
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary editPlayer">Save Player</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-stripped fade-in player" style="margin: 30px">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Name</th>
+                <th>Goals Scored</th>
+                <th>Role</th>
+                <th>Team</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="player : ${players}">
+                <td></td>
+                <td></td>
+                <td th:text="${player.name}"></td>
+                <td th:text="${player.goalsScored}"></td>
+                <td th:text="${player.role}"></td>
+                <td th:text="${player.team}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
+<script src="js/general.js"></script>
+<script src="js/players.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

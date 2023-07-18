@@ -17,3 +17,10 @@
     filter: brightness(80%); /* Adjust the brightness value as needed */
     z-index: -1;
 }
+.stadium {
+    table-layout: auto; /* Set table to be content-wrapped */
+}
+
+.stadium th, .stadium td {
+    padding: 5px; /* Adjust this value to change the padding between cells */
+}

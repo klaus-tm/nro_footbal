@@ -3,8 +3,9 @@ package com.nro.footballmanager.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+
 
 @Entity
 @Data
@@ -13,15 +14,15 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "teamOneID")
     private Team teamOne;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "teamTwoID")
     private Team teamTwo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "stadiumID")
     private Stadium stadium;
 
@@ -29,7 +30,7 @@ public class Game {
     private LocalTime startHour;
 
     @Column
-    private Date date;
+    private LocalDate date;
 
     @OneToOne
     @JoinColumn(name = "resultID")

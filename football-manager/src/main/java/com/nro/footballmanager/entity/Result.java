@@ -1,5 +1,6 @@
 package com.nro.footballmanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Result {
     @Column
     private Integer goalsTeamTwo;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "result")
     private Game game;
 }

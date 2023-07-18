@@ -8,32 +8,40 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ResultServiceImpl implements ResultService {
     @Autowired
     private ResultRepository resultRepository;
+
+    @Override
+    public List<Result> findAllResults() {
+        return resultRepository.findAll();
+    }
+
+    @Override
+    public Optional<Result> getResultByID(Long resultID) {
+        return resultRepository.findById(resultID);
+    }
+
     @Override
     public Result saveResult(Result result) {
         return resultRepository.save(result);
     }
 
     @Override
-    public List<Result> fetchResultsList() {
-        return (List<Result>) resultRepository.findAll();
-    }
+    public Result updateResult(Result oldResult, Result newResult) {
+        if(Objects.nonNull(newResult.getGoalsTeamOne()))
+            oldResult.setGoalsTeamOne(newResult.getGoalsTeamOne());
 
-    @Override
-    public Result updateResult(Result result, Long resultID) {
-        Result old = resultRepository.findById(resultID).get();
+        if(Objects.nonNull(newResult.getGoalsTeamTwo()))
+            oldResult.setGoalsTeamTwo(newResult.getGoalsTeamTwo());
 
-        if(Objects.nonNull(result.getGoalsTeamOne()))
-            old.setGoalsTeamOne(result.getGoalsTeamOne());
+        if(Objects.nonNull(newResult.getGame()))
+            oldResult.setGame(newResult.getGame());
 
-        if(Objects.nonNull(result.getGoalsTeamTwo()))
-            old.setGoalsTeamTwo(result.getGoalsTeamTwo());
-
-        return resultRepository.save(old);
+        return resultRepository.save(oldResult);
     }
 
     @Override
@@ -46,8 +54,4 @@ public class ResultServiceImpl implements ResultService {
         resultRepository.deleteById(resultID);
     }
 
-    @Override
-    public void deleteResults() {
-        resultRepository.deleteAll();
-    }
 }

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Teams</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="css/teams.css">
     <script src="https://kit.fontawesome.com/d97e248aca.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="icon" href="images/football.png">
 </head>
 <body>
@@ -45,12 +46,160 @@
         </div>
     </div>
 </nav>
-
+<!--main content-->
 <div class="scrollable-bg-teams">
     <div class="container mt-4">
+
         <h1 class="centered-text fade-in">Teams</h1>
+
+        <div class="d-flex justify-content-center" style="padding: 10px">
+            <button class="btn btn-primary mr-2 fade-in" data-bs-toggle="modal" data-bs-target="#teamModalAdd">Add Team</button>
+        </div>
+
+<!-- add team modal -->
+        <div class="modal fade" id="teamModalAdd" tabindex="-1" aria-labelledby="teamModalLabelAdd" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="teamModalLabelAdd">Add Team</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="teamNameAdd" class="form-label">Team Name</label>
+                                <input type="text" class="form-control" id="teamNameAdd" placeholder="Enter team name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsScoredAdd" class="form-label">Goals Scored</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsScoredAdd" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsReceivedAdd" class="form-label">Goals Received</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsReceivedAdd" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="victoriesAdd" class="form-label">Victories</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="victoriesAdd" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="defeatsAdd" class="form-label">Defeats</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="defeatsAdd" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="drawsAdd" class="form-label">Draws</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="drawsAdd" value="0">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary saveTeam">Save Team</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--edit team modal-->
+        <div class="modal fade" id="teamModalEdit" tabindex="-1" aria-labelledby="teamModalLabelEdit" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="teamModalLabelEdit">Edit Team</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="teamNameEdit" class="form-label">Team Name</label>
+                                <input type="text" class="form-control" id="teamNameEdit" placeholder="Enter team name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsScoredEdit" class="form-label">Goals Scored</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsScoredEdit" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="goalsReceivedEdit" class="form-label">Goals Received</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="goalsReceivedEdit" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="victoriesEdit" class="form-label">Victories</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="victoriesEdit" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="defeatsEdit" class="form-label">Defeats</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="defeatsEdit" value="0">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="drawsEdit" class="form-label">Draws</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="drawsEdit" value="0">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary editTeam">Save Team</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!--table-->
+        <table class="table table-stripped fade-in team">
+            <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Name</th>
+                <th>Goals Scored</th>
+                <th>Goals Received</th>
+                <th>Victories</th>
+                <th>Defeats</th>
+                <th>Draws</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="team : ${teams}">
+                <td></td>
+                <td></td>
+                <td th:text="${team.name}"></td>
+                <td th:text="${team.goalsScored}"></td>
+                <td th:text="${team.goalsReceived}"></td>
+                <td th:text="${team.victories}"></td>
+                <td th:text="${team.defeats}"></td>
+                <td th:text="${team.draws}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
+<script src="js/general.js"></script>
+<script src="js/teams.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

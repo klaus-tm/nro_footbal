@@ -3,17 +3,19 @@ package com.nro.footballmanager.service;
 import com.nro.footballmanager.entity.Result;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ResultService {
+    List<Result> findAllResults();
+
+    Optional<Result> getResultByID(Long resultID);
+
     Result saveResult(Result result);
 
-    List<Result> fetchResultsList();
-
-    Result updateResult(Result result, Long resultID);
+    Result updateResult(Result oldResult, Result newResult);
 
     Boolean resultExistance(Long resultID);
 
     void deleteResultByID(Long resultID);
 
-    void deleteResults();
 }

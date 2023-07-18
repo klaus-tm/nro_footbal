@@ -2,12 +2,14 @@ package com.nro.footballmanager.controller;
 
 import com.nro.footballmanager.entity.Result;
 import com.nro.footballmanager.service.ResultService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ResultController {
@@ -15,37 +17,29 @@ public class ResultController {
     private ResultService resultService;
 
     @PostMapping("/results")
-    public Result saveResult(@Validated @RequestBody Result result){
-        return resultService.saveResult(result);
+    public ResponseEntity<Result> saveResult(@Validated @RequestBody Result result){
+        return new ResponseEntity<>(resultService.saveResult(result), HttpStatus.CREATED);
     }
 
     @GetMapping("/results")
-    public List<Result> fetchResultsList(){
-        return resultService.fetchResultsList();
+    public ResponseEntity<List<Result>> findAllResults(){
+        return new ResponseEntity<>(resultService.findAllResults(), HttpStatus.OK);
     }
 
     @PutMapping("/results/{id}")
-    public Result updateResult(@RequestBody Result result, @PathVariable("id")Long resultId){
-        return resultService.updateResult(result, resultId);
+    public ResponseEntity<Result> updateResult(@RequestBody Result newResult, @PathVariable("id")Long resultId){
+        Optional<Result>oldResult = resultService.getResultByID(resultId);
+        if(oldResult.isPresent())
+            return new ResponseEntity<>(resultService.updateResult(oldResult.get(), newResult), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/results/{id}")
-    public String deleteResultById(@PathVariable("id")Long resultId){
-        try{
-            if(!resultService.resultExistance(resultId))
-                throw new EntityNotFoundException();
-            resultService.deleteResultByID(resultId);
-            return "Deleted successfully!";
-        } catch (EntityNotFoundException e) {
-            return "Deletion failed!";
-        }
-    }
+    public ResponseEntity<HttpStatus> deleteResultById(@PathVariable("id")Long resultId){
+        if(!resultService.resultExistance(resultId))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-    @DeleteMapping("/results")
-    public String deleteResults(){
-        if(resultService.fetchResultsList().isEmpty())
-            return "There are no results stored!";
-        resultService.deleteResults();
-        return "All results deleted!";
+        resultService.deleteResultByID(resultId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
