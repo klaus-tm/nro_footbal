@@ -48,11 +48,6 @@ function displayTop5TeamsVictories(teams) {
         victoriesCell.classList.add('wrapped-cell');
         row.appendChild(victoriesCell);
 
-        const goalsRateCell = document.createElement('td');
-        const goalsRate = team.goalsScored / team.goalsReceived;
-        goalsRateCell.textContent = goalsRate.toFixed(2); // Display the goals rate with 2 decimal places
-        goalsRateCell.classList.add('wrapped-cell');
-        row.appendChild(goalsRateCell);
 
         tableBody.appendChild(row);
     });
@@ -81,10 +76,6 @@ function displayTop5TeamsGoalRates(teams) {
         goalsRateCell.classList.add('wrapped-cell');
         row.appendChild(goalsRateCell);
 
-        const victoriesCell = document.createElement('td');
-        victoriesCell.textContent = team.victories; // Display the number of victories
-        victoriesCell.classList.add('wrapped-cell');
-        row.appendChild(victoriesCell);
 
         tableBody.appendChild(row);
     });
